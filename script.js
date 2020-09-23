@@ -8,20 +8,20 @@ const gamePage = document.getElementById('gamepage');
 const images = document.getElementById('images');
 let userScore = 0;
 let computerScore = 0;
+let loader;
 
-let imageArray = ["/hand-rock.png", "/hand-paper-200.png", "/hand-scissors.png"];
 
 let imageObject = [
     {
-        imgSrc : "/hand-rock.png",
+        imgSrc : "https://static.thenounproject.com/png/477918-200.png",
         imgTitle : "Rock"
     },
     {
-        imgSrc : "/hand-paper-200.png",
+        imgSrc : "https://static.thenounproject.com/png/477922-200.png",
         imgTitle : "Paper"
     },
     {
-        imgSrc : "/hand-scissors.png",
+        imgSrc : "https://static.thenounproject.com/png/477919-200.png",
         imgTitle : "Scissor"
     }
 ]
@@ -35,22 +35,22 @@ function getImage(image) {
     });
     displayUserImage(image);
     displayComputerImage();
-    compareImage();
 }
 
 function displayUserImage(image){
     userImage.src = image.src;
     userImage.title = image.title;
-    userImage.classList.add('userimage');
     user.appendChild(userImage);
 }
 
 function displayComputerImage() {
-    let randomNumber = Math.floor(Math.random()*3);
-    computerImage.src = imageObject[randomNumber].imgSrc;
-    computerImage.title = imageObject[randomNumber].imgTitle;
-    computerImage.classList.add('computerImage')
-    computer.appendChild(computerImage);
+    let randomNumber = Math.floor(Math.random()*3); 
+    loading();
+    if (loader === false) {
+        computerImage.src = imageObject[randomNumber].imgSrc;
+        computerImage.title = imageObject[randomNumber].imgTitle;
+        computer.appendChild(computerImage);
+    }
 }
 
 function compareImage() {
@@ -64,6 +64,24 @@ function compareImage() {
         userScore += 1;
     }
     score.textContent = `${userScore} - ${computerScore}`
+}
+
+function sleep(ms){
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function loading(){
+    loader = true;
+    for (let i = 0; i<2; i++){
+        for (let j = 0; j<3;j++){
+            computerImage.src = imageObject[j].imgSrc;
+            computerImage.title = imageObject[j].imgTitle;
+            await sleep(100);
+            computer.appendChild(computerImage);
+        }
+    }
+    loader = false;
+    compareImage();
 }
 
 
