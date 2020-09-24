@@ -51,6 +51,7 @@ function displayComputerImage() {
     if (loader === false) {
         computerImage.src = imageObject[randomNumber].imgSrc;
         computerImage.title = imageObject[randomNumber].imgTitle;
+        computerImage.classList.add('computer-img');
         computer.appendChild(computerImage);
         loader = true;
         compareImage();
@@ -79,6 +80,7 @@ async function loading(){
         for (let j = 0; j<3;j++){
             computerImage.src = imageObject[j].imgSrc;
             computerImage.title = imageObject[j].imgTitle;
+            computerImage.classList.add('computer-img');
             await sleep(100);
             computer.appendChild(computerImage);
         }
