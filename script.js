@@ -8,7 +8,7 @@ const gamePage = document.getElementById('gamepage');
 const images = document.getElementById('images');
 let userScore = 0;
 let computerScore = 0;
-let loader;
+let loader = true;
 
 
 let imageObject = [
@@ -45,11 +45,15 @@ function displayUserImage(image){
 
 function displayComputerImage() {
     let randomNumber = Math.floor(Math.random()*3); 
-    loading();
+    if (loader === true) {
+        loading();
+    }
     if (loader === false) {
         computerImage.src = imageObject[randomNumber].imgSrc;
         computerImage.title = imageObject[randomNumber].imgTitle;
         computer.appendChild(computerImage);
+        loader = true;
+        compareImage();
     }
 }
 
@@ -71,7 +75,6 @@ function sleep(ms){
 }
 
 async function loading(){
-    loader = true;
     for (let i = 0; i<2; i++){
         for (let j = 0; j<3;j++){
             computerImage.src = imageObject[j].imgSrc;
@@ -81,7 +84,7 @@ async function loading(){
         }
     }
     loader = false;
-    compareImage();
+    displayComputerImage();
 }
 
 
